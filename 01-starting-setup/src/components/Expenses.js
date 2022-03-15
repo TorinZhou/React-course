@@ -1,18 +1,30 @@
 import ExpenseItem from "./ExpenseItem";
+import Card from "./Card";
 import "./Expenses.css";
 const Expenses = function (props) {
   return (
-    <div className="expenses">
-      {props.info.map((expense) => {
-        return (
-          <ExpenseItem
-            title={expense.title}
-            amount={expense.amount}
-            date={expense.date}
-          />
-        );
-      })}
-    </div>
+    <Card className="expenses">
+      <ExpenseItem
+        title={props.info[0].title}
+        amount={props.info[0].amount}
+        date={props.info[0].date}
+      />
+      <ExpenseItem
+        title={props.info[1].title}
+        amount={props.info[1].amount}
+        date={props.info[1].date}
+      />
+      <ExpenseItem
+        title={props.info[2].title}
+        amount={props.info[2].amount}
+        date={props.info[2].date}
+      />
+      <ExpenseItem
+        title={props.info[3].title}
+        amount={props.info[3].amount}
+        date={props.info[3].date}
+      />
+    </Card>
   );
 };
 
