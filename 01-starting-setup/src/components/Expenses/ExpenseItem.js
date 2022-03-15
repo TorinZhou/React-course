@@ -1,8 +1,8 @@
 import ExpenseDate from "./ExpenseDate";
 import "./ExpenseItem.css";
-import Card from "./Card";
+import Card from "../UI/Card";
 
-function ExpanseItem(props) {
+const ExpanseItem = (props) => {
   return (
     // One root element
     <Card className="expense-item">
@@ -13,6 +13,6 @@ function ExpanseItem(props) {
       </div>
     </Card>
   );
-}
+};
 
 export default ExpanseItem;
