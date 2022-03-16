@@ -2,37 +2,49 @@ import React, { useState } from "react";
 import "./ExpenseForm.css";
 
 const ExpenseForm = () => {
-  // const [enteredTitle, setEnteredTitle] = useState("");
-  // const [enteredAmount, setEnteredAmount] = useState("");
-  // const [enteredDate, setEnteredDate] = useState("");
-  const [userInput, setUserInput] = useState({
-    enteredTitle: "",
-    enteredAmount: "",
-    enteredDate: "",
-  });
+  const [enteredTitle, setEnteredTitle] = useState("");
+  const [enteredAmount, setEnteredAmount] = useState("");
+  const [enteredDate, setEnteredDate] = useState("");
+
+  // safe way 2:
+  // const [userInput, setUserInput] = useState({
+  //   enteredTitle: "",
+  //   enteredAmount: "",
+  //   enteredDate: "",
+  // });
   const titleChangeHandler = (e) => {
-    setUserInput({
-      ...userInput,
-      enteredTitle: e.target.value,
-    });
+    setEnteredTitle(e.target.value);
+    // unsafe way 1: 🧨
+    // setUserInput({
+    //   ...userInput,
+    //   enteredTitle: e.target.value,
+    // });
+    // safe way 2:  ✨
+    // setUserInput((prevState)=>{
+    //   return { ...prevState, enteredTitle: e.target.value};
+    // });
   };
   const amountChangeHandler = (e) => {
-    setUserInput({
-      ...userInput,
-      enteredAmount: e.target.value,
-    });
+    setEnteredAmount(e.target.value);
     console.log(e.target.value);
   };
   const dateChangeHandler = (e) => {
-    setUserInput({
-      ...userInput,
-      enteredDate: e.target.value,
-    });
+    setEnteredDate(e.target.value);
     console.log(e.target.value);
   };
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const expenseData = {
+      title: enteredTitle,
+      amount: enteredAmount,
+      date: new Date(enteredDate),
+      // date: enteredDate,
+    };
+    console.log(expenseData);
+  };
   return (
-    <form onSubmit={() => {}}>
+    <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
