@@ -5,7 +5,7 @@ import "./Expenses.css";
 import ExpensesFilter from "./ExpensesFilter";
 
 const Expenses = function (props) {
-  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedYear, setSelectedYear] = useState("2022");
   const selectYearHandler = (year) => {
     console.log("In Expense.js: ");
     console.log(year);
@@ -13,7 +13,7 @@ const Expenses = function (props) {
   };
   return (
     <Card className="expenses">
-      <ExpensesFilter onSelectYear={selectYearHandler} />
+      <ExpensesFilter value={selectedYear} onSelectYear={selectYearHandler} />
       <ExpenseItem
         title={props.info[0].title}
         amount={props.info[0].amount}
