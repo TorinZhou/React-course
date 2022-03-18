@@ -21,6 +21,12 @@
   max-width: 100%;
 }
 
+.new-expense__buttons {
+  display: flex;
+  justify-content: flex-end;
+}
 .new-expense__actions {
+  /* display: inline-block; */
   text-align: right;
+  /* text-align: left; */
 }
