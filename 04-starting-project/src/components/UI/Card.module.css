@@ -1,0 +1,12 @@
+.card {
+  /* width: min-content;
+  height: auto;
+  background-color: antiquewhite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem; */
+  background-color: antiquewhite;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 10px;
+}
