@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 
 import Card from "./Card";
 import Button from "./Button";
@@ -26,12 +27,18 @@ const Modal = (props) => {
 const ErrorModal = (props) => {
   return (
     <React.Fragment>
-      <Backdrop className={classes.backdrop} onClick={props.onCinfirm} />
-      <Modal
-        title={props.title}
-        message={props.message}
-        onConfirm={props.onConfirm}
-      />
+      {ReactDOM.createPortal(
+        <Backdrop className={classes.backdrop} onClick={props.onCinfirm} />,
+        document.getElementById("backdrop-root")
+      )}
+      {ReactDOM.createPortal(
+        <Modal
+          title={props.title}
+          message={props.message}
+          onConfirm={props.onConfirm}
+        />,
+        document.getElementById("modal-root")
+      )}
     </React.Fragment>
   );
 };
