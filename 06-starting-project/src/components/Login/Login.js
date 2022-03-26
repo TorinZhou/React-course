@@ -5,8 +5,11 @@ import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
 
 const reducer = (state, action) => {
-  if (action.type === "input") {
-    return { ...state, val: state.val + action.val };
+  if (action.type === "USER_INPUT") {
+    return { val: action.val, isValid: action.val.includes("@") };
+  }
+  if (action.type === "INPUT_BLUR") {
+    return { ...state, isValid: state.val.includes("@") };
   }
   return { val: "", isValid: false };
 };
@@ -24,7 +27,7 @@ const Login = (props) => {
   });
 
   const emailChangeHandler = (event) => {
-    emailStateDepatch({ type: "input", payload: event.target.value });
+    emailStateDepatch({ type: "USER_INPUT", val: event.target.value });
     console.log("Email Changed");
   };
 
@@ -34,7 +37,7 @@ const Login = (props) => {
   };
 
   const validateEmailHandler = () => {
-    emailStateDepatch();
+    emailStateDepatch({ type: "INPUT_BLUR" });
   };
 
   useEffect(() => {
@@ -46,7 +49,7 @@ const Login = (props) => {
       console.log("clear up function run");
       clearTimeout(timer);
     };
-  }, [emailState.val, enteredPassword]);
+  }, [emailState.val, emailState.isValid, enteredPassword]);
 
   const validatePasswordHandler = () => {
     setPasswordIsValid(enteredPassword.trim().length > 6);
