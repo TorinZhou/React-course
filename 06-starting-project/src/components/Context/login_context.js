@@ -31,7 +31,7 @@ export const LoginComponent = (props) => {
 
   return (
     <LoginContext.Provider value={{ isLoggedIn: isLoggedIn, onLogout: logoutHandler, onLogin: loginHandler }}>
-      {props.content}
+      {props.children}
     </LoginContext.Provider>
   );
 }

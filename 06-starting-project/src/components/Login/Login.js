@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useReducer, useContext } from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
+import LoginContext from "../Context/login_context";
+
 
 const emailReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
@@ -13,6 +15,7 @@ const emailReducer = (state, action) => {
   }
   return { val: "", isValid: false };
 };
+
 const passwordReducer = (state, action) => {
   if (action.type === "PASSWORD_INPUT") {
     return { val: action.val, isValid: action.val.trim().length > 6 };
@@ -28,6 +31,7 @@ const Login = (props) => {
   // const [emailIsValid, setEmailIsValid] = useState();
   // const [enteredPassword, setEnteredPassword] = useState("");
   // const [passwordIsValid, setPasswordIsValid] = useState();
+  const ctx = useContext(LoginContext);
   const [formIsValid, setFormIsValid] = useState(false);
 
   const [emailState, emailDispatch] = useReducer(emailReducer, {
@@ -38,12 +42,12 @@ const Login = (props) => {
 
   const emailChangeHandler = (event) => {
     emailDispatch({ type: "USER_INPUT", val: event.target.value });
-    console.log("Email Changed");
+    // console.log("Email Changed");
   };
   const passwordChangeHandler = (event) => {
     passwordDispatch({ type: "PASSWORD_INPUT", val: event.target.value });
-    console.log(event.target.value);
-    console.log("Password Changed");
+    // console.log(event.target.value);
+    // console.log("Password Changed");
   };
 
   const validateEmailHandler = () => {
@@ -59,14 +63,14 @@ const Login = (props) => {
       500
     );
     return () => {
-      console.log("clear up function run");
+      // console.log("clear up function run");
       clearTimeout(timer);
     };
   }, [emailState.isValid, passwordState.isValid]);
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.val, passwordState.val);
+    ctx.onLogin(emailState.val, passwordState.val);
   };
 
   return (
