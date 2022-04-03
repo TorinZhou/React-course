@@ -1,17 +1,16 @@
-import React, {useState, useEffect} from "react";
-
+import React, { useState, useEffect } from "react";
 
 const LoginContext = React.createContext({
   isLoggedIn: false,
-  onLogout: ()=>{},
-  onLogin: ()=>{},
+  onLogout: () => {},
+  onLogin: () => {},
 });
 
 export const LoginComponent = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   console.log("Calling LoginComponent");
-  
+
   useEffect(() => {
     if (localStorage.getItem("isLoggedIn")) {
       setIsLoggedIn(true);
@@ -31,10 +30,16 @@ export const LoginComponent = (props) => {
   };
 
   return (
-    <LoginContext.Provider value={{ isLoggedIn: isLoggedIn, onLogout: logoutHandler, onLogin: loginHandler }}>
+    <LoginContext.Provider
+      value={{
+        isLoggedIn: isLoggedIn,
+        onLogout: logoutHandler,
+        onLogin: loginHandler,
+      }}
+    >
       {props.children}
     </LoginContext.Provider>
   );
-}
+};
 
 export default LoginContext;
