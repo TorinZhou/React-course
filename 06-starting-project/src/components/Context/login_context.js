@@ -4,6 +4,7 @@ import React, {useState, useEffect} from "react";
 const LoginContext = React.createContext({
   isLoggedIn: false,
   onLogout: ()=>{},
+  onLogin: ()=>{},
 });
 
 export const LoginComponent = (props) => {
