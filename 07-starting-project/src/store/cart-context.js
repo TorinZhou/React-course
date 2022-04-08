@@ -6,6 +6,8 @@ const CartContext = React.createContext({
   totalPrice: 0,
   addItem: (item) => {},
   removeItem: (id) => {},
+  increaseAmount: () => {},
+  decreaseAmount: () => {},
 });
 // default context will give me better auto-completion
 
@@ -47,6 +49,22 @@ const cartReducer = (state, action) => {
       amount: returnedAmount,
     };
   }
+  if (action.type === "INCREASE") {
+    const returnedItemsArray = structuredClone(state.items);
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.payload
+    );
+    returnedItemsArray[existingCartItemIndex].amount += 1;
+
+    return {
+      items: returnedItemsArray,
+      totalPrice: state.totalPrice + state.items[existingCartItemIndex].price,
+      amount: state.amount + 1,
+    };
+  }
+  if (action.type === "DECREASE") {
+    console.log("-1");
+  }
 
   return { items: [], totalPrice: 0, amount: 0 };
 };
@@ -59,12 +77,20 @@ export const CartContextComponent = (props) => {
   const removeItemFromCartHandler = (id) => {
     dispatchCartState({ type: "REMOVE", payload: id });
   };
+  const increaseAmount = (id) => {
+    dispatchCartState({ type: "INCREASE", payload: id });
+  };
+  const decreaseAmount = (id) => {
+    dispatchCartState({ type: "DECREASE", payload: id });
+  };
   const cartContest = {
     items: cartState.items,
     amount: cartState.amount,
     totalPrice: cartState.totalPrice,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
+    increaseAmount: increaseAmount,
+    decreaseAmount: decreaseAmount,
   };
   return (
     <CartContext.Provider value={cartContest}>

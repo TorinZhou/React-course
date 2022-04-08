@@ -6,11 +6,12 @@ import CartContext from "../../store/cart-context";
 
 const Cart = (props) => {
   const ctx = useContext(CartContext);
+
   const removeItemAmountHandler = (id) => {
-    console.log(id);
+    ctx.decreaseAmount(id);
   };
   const addItemAmountHander = (id) => {
-    console.log(id);
+    ctx.increaseAmount(id);
   };
   const cartItems = (
     <ul className={classes["cart-items"]}>
