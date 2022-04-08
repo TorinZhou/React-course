@@ -63,7 +63,24 @@ const cartReducer = (state, action) => {
     };
   }
   if (action.type === "DECREASE") {
-    console.log("-1");
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.payload
+    );
+    const existingItem = state.items[existingCartItemIndex];
+    let returnedItems = [];
+    if (existingItem.amount === 1) {
+      returnedItems = state.items.filter((item) => item.id !== existingItem.id);
+    } else {
+      const updatedItem = { ...existingItem, amount: existingItem.amount - 1 };
+      returnedItems = structuredClone(state.items);
+      returnedItems[existingCartItemIndex] = updatedItem;
+    }
+
+    return {
+      items: returnedItems,
+      totalPrice: state.totalPrice - existingItem.price,
+      amount: state.amount - 1,
+    };
   }
 
   return { items: [], totalPrice: 0, amount: 0 };
