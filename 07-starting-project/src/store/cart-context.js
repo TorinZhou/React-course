@@ -7,37 +7,58 @@ const CartContext = React.createContext({
   addItem: (item) => {},
   removeItem: (id) => {},
 });
-// default context will give me better auto-complition
+// default context will give me better auto-completion
 
+const defaultCart = { items: [], totalPrice: 0, amount: 0 };
 const cartReducer = (state, action) => {
+  const updateItem = (itemsState, index, item) => {
+    const updatedItemAmount = itemsState[index].amount + item.amount;
+    return updatedItemAmount;
+  };
+  const updateItems = (itemsState, item) => {
+    return itemsState.concat(item);
+  };
+  const getReturnedItemsArray = (itemsState, index, item) => {
+    if (index < 0) {
+      return updateItems(itemsState, item);
+    } else {
+      const amount = updateItem(itemsState, index, item);
+      const itemsArray = structuredClone(itemsState);
+      itemsArray[index].amount = amount;
+      return itemsArray;
+    }
+  };
+
   if (action.type === "ADD") {
-    const returnedItemsArray = state.items.concat(action.payload);
     const returnedTotalPrice =
       state.totalPrice + action.payload.price * action.payload.amount;
     const returnedAmount = state.amount + action.payload.amount;
-    console.log(returnedAmount);
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.payload.id
+    );
+    const returnedItemsArray = getReturnedItemsArray(
+      state.items,
+      existingCartItemIndex,
+      action.payload
+    );
     return {
-      ...state,
-      amount: returnedAmount,
       items: returnedItemsArray,
       totalPrice: returnedTotalPrice,
+      amount: returnedAmount,
     };
   }
 
-  return { items: [], totalPrice: 0 };
+  return { items: [], totalPrice: 0, amount: 0 };
 };
-const defaultCart = { items: [], totalPrice: 0, amount: 0 };
 
 export const CartContextComponent = (props) => {
   const [cartState, dispatchCartState] = useReducer(cartReducer, defaultCart);
-
   const addItemToCartHandler = (item) => {
     dispatchCartState({ type: "ADD", payload: item });
   };
   const removeItemFromCartHandler = (id) => {
     dispatchCartState({ type: "REMOVE", payload: id });
   };
-
   const cartContest = {
     items: cartState.items,
     amount: cartState.amount,
@@ -45,7 +66,6 @@ export const CartContextComponent = (props) => {
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
   };
-
   return (
     <CartContext.Provider value={cartContest}>
       {props.children}
