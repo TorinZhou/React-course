@@ -1,11 +1,16 @@
 import classes from "./User.module.css";
-import { useCallback } from "react";
+import { Component } from "react";
 
-const User = (props) => {
-  const foo = useCallback(() => {
-    console.log("bar");
-  }, []);
-  return <li className={classes.user}>{props.name}</li>;
-};
+class User extends Component {
+  render() {
+    return <li className={classes.user}>{this.props.name}</li>;
+  }
+}
+// const User = (props) => {
+//   const foo = useCallback(() => {
+//     console.log("bar");
+//   }, []);
+//   return <li className={classes.user}>{props.name}</li>;
+// };
 
 export default User;
