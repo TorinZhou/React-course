@@ -32,7 +32,6 @@ function App() {
           releaseDate: data[key].releaseDate,
         };
       });
-
       setMovies(movies);
     } catch (error) {
       setError(error.message);
@@ -59,7 +58,7 @@ function App() {
       const data = await response.json();
       console.log(data);
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   };
 
