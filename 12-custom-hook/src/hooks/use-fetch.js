@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useCallback } from "react";
 
-const useFecth = (requestConfig, apply) => {
+const useFecth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   console.log("UseFetch Run");
-  const sendRequest = async () => {
+  const sendRequest = useCallback(async (requestConfig, apply) => {
+    console.log("SendRequest is built");
     setIsLoading(true);
     setError(null);
     try {
@@ -27,7 +29,7 @@ const useFecth = (requestConfig, apply) => {
       setError(err.message || "Something went wrong!");
     }
     setIsLoading(false);
-  };
+  }, []);
 
   return {
     isLoading,

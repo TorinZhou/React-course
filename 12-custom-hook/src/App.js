@@ -6,25 +6,23 @@ import NewTask from "./components/NewTask/NewTask";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const fetchConfig = {
-    url: "https://react-test-d6cb2-default-rtdb.firebaseio.com/tasks.json",
-  };
-  const requestHandler = (data) => {
-    console.log(data);
-    const keys = Object.keys(data);
-    const tasks = keys.map((key) => {
-      return { id: key, text: data[key].text };
-    });
-    setTasks(tasks);
-  };
-  const {
-    isLoading,
-    error,
-    sendRequest: fetchTasks,
-  } = useFecth(fetchConfig, requestHandler);
+
+  const { isLoading, error, sendRequest: fetchTasks } = useFecth();
 
   useEffect(() => {
-    fetchTasks();
+    const requestHandler = (data) => {
+      const keys = Object.keys(data);
+      const tasks = keys.map((key) => {
+        return { id: key, text: data[key].text };
+      });
+      setTasks(tasks);
+    };
+    fetchTasks(
+      {
+        url: "https://react-test-d6cb2-default-rtdb.firebaseio.com/tasks.json",
+      },
+      requestHandler
+    );
   }, []);
   const taskAddHandler = (task) => {
     setTasks((prevTasks) => prevTasks.concat(task));
