@@ -26,16 +26,19 @@ body {
 
 .form-control {
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.form-control input,
+/* .form-control input,
 .form-control label {
   display: block;
-}
+} */
 
 .form-control label {
   font-weight: bold;
-  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .form-control input,
