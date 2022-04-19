@@ -10,62 +10,62 @@ const emailValidation = (inputEmail) => {
 };
 
 const BasicForm = (props) => {
-  const [formIsValid, setFormIsValid] = useState(false);
-  const [
-    firstName,
-    setFirstName,
-    firstNameInputIsTouched,
-    setFirstNameInputIsTouched,
-    firstNameInputHasError,
-    firstNameOnChangeHandler,
-    firstNameInit,
-  ] = useInput(nameValidation);
-  const [
-    lastName,
-    setLastName,
-    lastNameInputIsTouched,
-    setLastNameInputIsTouched,
-    lastNameInputHasError,
-    lastNameOnChangeHandler,
-    lastNameInit,
-  ] = useInput(nameValidation);
+  const {
+    inputValue: firstName,
+    inputValueIsValid: firstNameIsValid,
+    setInputIsTouched: setFirstNameInputIsTouched,
+    hasError: firstNameInputHasError,
+    onChange: firstNameOnChangeHandler,
+    init: firstNameInit,
+  } = useInput(nameValidation);
+  const {
+    inputValue: lastName,
+    inputValueIsValid: lastNameIsValid,
+    setInputIsTouched: setLastNameInputIsTouched,
+    hasError: lastNameInputHasError,
+    onChange: lastNameOnChangeHandler,
+    init: lastNameInit,
+  } = useInput(nameValidation);
 
-  const [
-    email,
-    setEmail,
-    emailInputIsTouched,
-    setEmailInputIsTouched,
-    emailInputHasError,
-    emailOnChangeHandler,
-    emailInputInit,
-  ] = useInput(emailValidation);
+  const {
+    inputValue: email,
+    inputValueIsValid: emailIsValid,
+    setInputIsTouched: setEmailInputIsTouched,
+    hasError: emailInputHasError,
+    onChange: emailOnChangeHandler,
+    init: emailInputInit,
+  } = useInput(emailValidation);
 
-  useEffect(() => {
-    console.log("dependency changed");
-    setFormIsValid(
-      firstNameInputHasError && lastNameInputHasError && emailInputHasError
-    );
-  }, [firstNameInputHasError, lastNameInputHasError, emailInputHasError]);
+  const formIsValid = firstNameIsValid && lastNameIsValid && emailIsValid;
 
   const submitHandler = (e) => {
     setFirstNameInputIsTouched(true);
     setLastNameInputIsTouched(true);
     setEmailInputIsTouched(true);
     e.preventDefault();
-    console.log("Form validation:", formIsValid);
+
     if (!formIsValid) {
       return;
     }
     console.log("submit");
-    // firstNameInit();
-    // lastNameInit();
-    // emailInputInit();
+    firstNameInit();
+    lastNameInit();
+    emailInputInit();
   };
+  const firstNameInputClass = firstNameInputHasError
+    ? "form-control invalid"
+    : "form-control";
+  const lastNameInputClass = lastNameInputHasError
+    ? "form-control invalid"
+    : "form-control";
+  const emailInputClass = emailInputHasError
+    ? "form-control invalid"
+    : "form-control";
 
   return (
     <form onSubmit={submitHandler}>
       <div className="control-group">
-        <div className="form-control">
+        <div className={firstNameInputClass}>
           <label htmlFor="firstName">First Name</label>
           <input
             type="text"
@@ -75,7 +75,7 @@ const BasicForm = (props) => {
           />
           {firstNameInputHasError && <p>Please enter your first name.</p>}
         </div>
-        <div className="form-control">
+        <div className={lastNameInputClass}>
           <label htmlFor="lastName">Last Name</label>
           <input
             type="text"
@@ -86,7 +86,7 @@ const BasicForm = (props) => {
           {lastNameInputHasError && <p>Please enter your last name.</p>}
         </div>
       </div>
-      <div className="form-control">
+      <div className={emailInputClass}>
         <label htmlFor="email">E-Mail Address</label>
         <input
           type="text"

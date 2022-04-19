@@ -5,27 +5,23 @@ const useInput = (validationFn) => {
   const [inputIsTouched, setInputIsTouched] = useState(false);
   const inputValueIsValid = validationFn(inputValue);
   const hasError = inputIsTouched && !inputValueIsValid;
-
-  console.log(inputValueIsValid, inputIsTouched);
   const onChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-    console.log(inputValueIsValid);
   };
   const init = () => {
     setInputValue("");
     setInputIsTouched(false);
   };
 
-  return [
+  return {
     inputValue,
-    setInputValue,
-    inputIsTouched,
+    inputValueIsValid,
     setInputIsTouched,
     hasError,
     onChange,
     init,
-  ];
+  };
 };
 
 export default useInput;
