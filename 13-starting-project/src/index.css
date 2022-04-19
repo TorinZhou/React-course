@@ -24,17 +24,10 @@ body {
   margin: 3rem auto;
 }
 
-.form-control {
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-/* .form-control input,
+.form-control input,
 .form-control label {
   display: block;
-} */
+}
 
 .form-control label {
   font-weight: bold;

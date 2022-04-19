@@ -1,12 +1,13 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 // * Validation Funtion
+
 const nameValidation = (name) => {
   const regEx = /^\w+$/g;
   return regEx.test(name);
 };
 const emailValidation = (email) => {
-  const regEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/g;
+  const regEx = /^[^\W@]+@[^\W@]+\.[^\W@]+$/g;
   return regEx.test(email);
 };
 
@@ -18,7 +19,6 @@ const SimpleInput = (props) => {
   const nameInputIsValid = nameValidation(enteredName);
   const emailInputIsValid = emailValidation(enteredEmail);
   let formIsValid = false;
-  console.log(emailInputIsValid, enteredEmailIsTouched);
   if (nameInputIsValid && emailInputIsValid) {
     formIsValid = true;
   }
