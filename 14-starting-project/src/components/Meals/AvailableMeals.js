@@ -8,7 +8,7 @@ import Spinner from "../UI/Spinner";
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [hasError, setHasError] = useState(false);
+  const [httpError, setHttpError] = useState({ hasError: false, message: "" });
 
   useEffect(() => {
     const fetchMeals = async () => {
@@ -16,8 +16,9 @@ const AvailableMeals = () => {
       const response = await fetch(
         "https://react-test-d6cb2-default-rtdb.firebaseio.com/meals.json"
       );
+      console.log(response);
       if (!response.ok) {
-        return;
+        throw new Error("Something went wrong");
       }
       const data = await response.json();
       const meals = Object.keys(data).map((key) => {
@@ -30,10 +31,22 @@ const AvailableMeals = () => {
       });
       setTimeout(() => {
         setIsLoading(false);
-      }, 1000);
+      }, 3000);
       setMeals(meals);
     };
-    fetchMeals();
+
+    fetchMeals().catch((err) => {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
+      setHttpError((prevErrState) => {
+        return {
+          ...prevErrState,
+          hasError: true,
+          message: err.message,
+        };
+      });
+    });
   }, []);
 
   const mealsList = meals.map((meal) => (
@@ -50,6 +63,7 @@ const AvailableMeals = () => {
     <section className={classes.meals}>
       <Card>
         {isLoading && <Spinner />}
+        {!isLoading && httpError.hasError && <p>Something went wrong</p>}
         {!isLoading && <ul>{mealsList}</ul>}
       </Card>
     </section>
