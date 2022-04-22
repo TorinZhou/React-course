@@ -31,14 +31,14 @@ const AvailableMeals = () => {
       });
       setTimeout(() => {
         setIsLoading(false);
-      }, 3000);
+      }, 1000);
       setMeals(meals);
     };
 
     fetchMeals().catch((err) => {
       setTimeout(() => {
         setIsLoading(false);
-      }, 3000);
+      }, 1000);
       setHttpError((prevErrState) => {
         return {
           ...prevErrState,

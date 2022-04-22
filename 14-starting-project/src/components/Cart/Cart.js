@@ -5,8 +5,12 @@ import CartItem from "./CartItem";
 import Checkout from "./Checkout";
 import classes from "./Cart.module.css";
 import CartContext from "../../store/cart-context";
+import Spinner from "../UI/Spinner";
 const Cart = (props) => {
   const [isCheckout, setIsCheckout] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [didSubmit, setDidSubmit] = useState(false);
+
   const cartCtx = useContext(CartContext);
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
@@ -49,16 +53,55 @@ const Cart = (props) => {
       )}
     </div>
   );
-  const   
-  return (
-    <Modal onClose={props.onClose}>
+  const submitOrder = async (userData) => {
+    const submitData = {
+      items: cartCtx.items,
+      amount: cartCtx.totalAmount,
+      ...userData,
+    };
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(
+        "https://react-test-d6cb2-default-rtdb.firebaseio.com/orders.json",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(submitData),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Something went wrong.");
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+    setIsSubmitting(false);
+    setDidSubmit(true);
+  };
+  const cartModalContent = (
+    <>
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckout && <Checkout onCancel={props.onClose} onCheckout={}/>}
+      {isCheckout && (
+        <Checkout onCancel={props.onClose} onOrder={submitOrder} />
+      )}
       {!isCheckout && modalActions}
+    </>
+  );
+  const isSubmittingContent = (
+    <>
+      <Spinner />
+    </>
+  );
+  return (
+    <Modal onClose={props.onClose}>
+      {isSubmitting ? isSubmittingContent : cartModalContent}
     </Modal>
   );
 };

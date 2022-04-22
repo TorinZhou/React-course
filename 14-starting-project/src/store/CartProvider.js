@@ -77,8 +77,9 @@ const CartProvider = (props) => {
     totalAmount: cartState.totalAmount,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
+    closeCart: props.onClose,
   };
-
+  console.log("closeCart: ", props.onClose);
   return (
     <CartContext.Provider value={cartContext}>
       {props.children}
