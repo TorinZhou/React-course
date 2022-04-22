@@ -6,6 +6,7 @@ import Checkout from "./Checkout";
 import classes from "./Cart.module.css";
 import CartContext from "../../store/cart-context";
 import Spinner from "../UI/Spinner";
+import SuccessMessage from "../UI/SuccessMessage";
 const Cart = (props) => {
   const [isCheckout, setIsCheckout] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -78,8 +79,11 @@ const Cart = (props) => {
     } catch (err) {
       console.log(err.message);
     }
-    setIsSubmitting(false);
-    setDidSubmit(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setDidSubmit(true);
+    }, 2000);
+    cartCtx.clearCart();
   };
   const cartModalContent = (
     <>
@@ -99,9 +103,16 @@ const Cart = (props) => {
       <Spinner />
     </>
   );
+  const didSubmitContent = (
+    <>
+      <SuccessMessage message="点餐成功!" />
+    </>
+  );
   return (
     <Modal onClose={props.onClose}>
-      {isSubmitting ? isSubmittingContent : cartModalContent}
+      {isSubmitting && isSubmittingContent}
+      {!isSubmitting && !didSubmit && cartModalContent}
+      {didSubmit && didSubmitContent}
     </Modal>
   );
 };

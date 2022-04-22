@@ -1,0 +1,9 @@
+.successContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.successContainer p {
+  color: darkorange;
+}
