@@ -18,7 +18,6 @@ const Products = (props) => {
       quantity: 1,
       total: product.price,
     };
-    console.log(formattedProduct);
     dispatch(cartSliceActions.addItemToCart(formattedProduct));
   };
 

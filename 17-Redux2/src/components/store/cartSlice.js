@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 const cartSlice = createSlice({
   name: "cartSlice",
   initialState: {
@@ -8,6 +7,11 @@ const cartSlice = createSlice({
     cartItemList: [],
   },
   reducers: {
+    cartInit(state, action) {
+      state.cartIsShown = action.payload?.cartIsShown || false;
+      state.cartItemAmount = action.payload?.cartItemAmount || 0;
+      state.cartItemList = action.payload?.cartItemList || [];
+    },
     showCart(state, action) {
       state.cartIsShown = true;
     },
