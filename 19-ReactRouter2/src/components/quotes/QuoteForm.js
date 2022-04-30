@@ -21,7 +21,11 @@ const QuoteForm = (props) => {
 
   return (
     <Card>
-      <form className={classes.form} onSubmit={submitFormHandler}>
+      <form
+        className={classes.form}
+        onSubmit={submitFormHandler}
+        onFocus={props.onFormIsTouched}
+      >
         {props.isLoading && (
           <div className={classes.loading}>
             <LoadingSpinner />
@@ -37,7 +41,9 @@ const QuoteForm = (props) => {
           <textarea id="text" rows="5" ref={textInputRef}></textarea>
         </div>
         <div className={classes.actions}>
-          <button className="btn">Add Quote</button>
+          <button className="btn" onClick={props.onFormWillSubmit}>
+            Add Quote
+          </button>
         </div>
       </form>
     </Card>
