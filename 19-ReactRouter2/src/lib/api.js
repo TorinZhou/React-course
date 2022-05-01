@@ -72,8 +72,7 @@ export async function addComment(requestData) {
   if (!response.ok) {
     throw new Error(data.message || "Could not add comment.");
   }
-
-  return { commentId: data.name };
+  return data.name;
 }
 
 export async function getAllComments(quoteId) {
@@ -90,7 +89,7 @@ export async function getAllComments(quoteId) {
   for (const key in data) {
     const commentObj = {
       id: key,
-      ...data[key],
+      text: data[key],
     };
 
     transformedComments.push(commentObj);

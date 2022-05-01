@@ -29,7 +29,6 @@ function httpReducer(state, action) {
 }
 
 function useHttp(requestFunction, startWithPending = false) {
-  console.log("Now using http");
   const [httpState, dispatch] = useReducer(httpReducer, {
     status: startWithPending ? "pending" : null,
     data: null,
@@ -41,6 +40,7 @@ function useHttp(requestFunction, startWithPending = false) {
       dispatch({ type: "SEND" });
       try {
         const responseData = await requestFunction(requestData);
+        console.log("responseData is: ", responseData);
         dispatch({ type: "SUCCESS", responseData });
       } catch (error) {
         dispatch({

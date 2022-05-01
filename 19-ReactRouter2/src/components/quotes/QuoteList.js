@@ -3,7 +3,6 @@ import { sortQuotes } from "../extraFiles/sorting";
 import QuoteItem from "./QuoteItem";
 import classes from "./QuoteList.module.css";
 import { useHistory, useLocation } from "react-router-dom";
-import { useState } from "react";
 
 const QuoteList = (props) => {
   const history = useHistory();
