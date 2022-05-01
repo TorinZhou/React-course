@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import useHttp from "../../hooks/use-http";
 import { addComment, getAllComments } from "../../lib/api";
@@ -37,14 +37,21 @@ const Comments = () => {
   if (statusPull === "pending") {
     comment = <LoadingSpinner />;
   }
-  if (statusPull === "completed") {
+  if (statusPull === "completed" && dataPull.length !== 0) {
     comment = <CommentsList comments={dataPull} />;
   }
+  if (statusPull === "completed" && dataPull.length === 0) {
+    comment = (
+      <div className="focused">
+        <p>No Comments Yet</p>
+      </div>
+    );
+  }
 
-  const addNewCommentHandler = (quoteId, text) => {
+  const addNewCommentHandler = useCallback((quoteId, text) => {
     sendPushRequest({ quoteId, commentData: text });
     setIsAddingComment(false);
-  };
+  }, []);
 
   return (
     <section className={classes.comments}>
