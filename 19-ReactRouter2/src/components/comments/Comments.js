@@ -9,16 +9,14 @@ import LoadingSpinner from "../UI/LoadingSpinner";
 
 const Comments = () => {
   const { quotesId } = useParams();
-  const {
-    sendRequest: sendPushRequest,
-    status: statusPush,
-    error: errorPush,
-    data: dataPush,
-  } = useHttp(addComment, false);
+  const { sendRequest: sendPushRequest, data: dataPush } = useHttp(
+    addComment,
+    false
+  );
   const {
     sendRequest: sendPullRequest,
     status: statusPull,
-    error: errorPull,
+
     data: dataPull,
   } = useHttp(getAllComments, false);
   const [isAddingComment, setIsAddingComment] = useState(false);
@@ -48,10 +46,13 @@ const Comments = () => {
     );
   }
 
-  const addNewCommentHandler = useCallback((quoteId, text) => {
-    sendPushRequest({ quoteId, commentData: text });
-    setIsAddingComment(false);
-  }, []);
+  const addNewCommentHandler = useCallback(
+    (quoteId, text) => {
+      sendPushRequest({ quoteId, commentData: text });
+      setIsAddingComment(false);
+    },
+    [sendPushRequest]
+  );
 
   return (
     <section className={classes.comments}>
