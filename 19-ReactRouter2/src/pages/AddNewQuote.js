@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { addQuote } from "../lib/api";
 import useHttp from "../hooks/use-http";
 
-export const AddNewQuote = (props) => {
+const AddNewQuote = (props) => {
   const [formIsTouched, setFormIsTouched] = useState(false);
   const history = useHistory();
   const { sendRequest, status } = useHttp(addQuote);
@@ -39,3 +39,5 @@ export const AddNewQuote = (props) => {
     </>
   );
 };
+
+export default AddNewQuote;
